@@ -1,7 +1,10 @@
 package com.gary.springsecurity.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity // 客製化SpringSecurity
@@ -22,4 +25,9 @@ public class MySecurityConfig {
   //                .build();
   //        return new InMemoryUserDetailsManager(user1, user2);
   //    }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return NoOpPasswordEncoder.getInstance();
+  }
 }
