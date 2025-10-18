@@ -1,0 +1,24 @@
+package com.gary.springsecurity.controller;
+
+import com.gary.springsecurity.dao.MemberDao;
+import com.gary.springsecurity.model.Member;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MemberController {
+
+    @Autowired
+    private MemberDao memberDao;
+
+    @PostMapping("/register")
+    public Member register(@RequestBody Member member) {
+        // 省略參數檢查
+
+        // db插入一筆新的 Member 數據
+        Integer memberId = memberDao.createMember(member);
+        return memberDao.getMemberById(memberId);
+    }
+}
