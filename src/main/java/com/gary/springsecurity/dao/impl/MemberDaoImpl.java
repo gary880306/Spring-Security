@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -93,5 +94,11 @@ public class MemberDaoImpl implements MemberDao {
     List<Role> roleList = namedParameterJdbcTemplate.query(sql, map, roleRowMapper);
 
     return roleList;
+  }
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @Override
+  public String getName() {
+    return "gary";
   }
 }
