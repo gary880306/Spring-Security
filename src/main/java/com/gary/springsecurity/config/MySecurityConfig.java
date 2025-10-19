@@ -45,6 +45,7 @@ public class MySecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/welcome", "/register").permitAll() // url = welcome or register 允許所有人
                         .requestMatchers("/**").authenticated()
+                        .requestMatchers("/authorization").hasAnyRole("ADMIN")
                         .anyRequest().denyAll()
                 )
                 .build();
