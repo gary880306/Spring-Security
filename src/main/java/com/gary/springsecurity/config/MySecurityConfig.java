@@ -10,9 +10,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity // 客製化SpringSecurity
+@EnableWebSecurity(debug = true) // 客製化SpringSecurity
 @EnableMethodSecurity
 public class MySecurityConfig {
 
@@ -51,6 +52,8 @@ public class MySecurityConfig {
                         .requestMatchers("/authorization").hasAnyRole("ADMIN")
                         .anyRequest().denyAll()
                 )
+                .addFilterBefore(new MyFilter1(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new MyFilter2(), MyFilter1.class)
                 .build();
     }
 }
