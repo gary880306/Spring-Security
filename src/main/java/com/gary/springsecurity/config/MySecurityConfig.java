@@ -11,6 +11,9 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity(debug = true) // 客製化SpringSecurity
@@ -54,6 +57,19 @@ public class MySecurityConfig {
                 )
                 .addFilterBefore(new MyFilter1(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new MyFilter2(), MyFilter1.class)
+                .cors(cors -> cors.configurationSource(createCorsConfig()))
                 .build();
+    }
+
+    private CorsConfigurationSource createCorsConfig() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*"); // 允許的請求來源有哪些
+        config.addAllowedHeader("*"); // 允許 request header 有哪些
+        config.addAllowedMethod("*"); // 允許 http method 有哪些
+//        config.setAllowCredentials(true);  // 後端是否允許前端帶上 cookie
+        config.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
