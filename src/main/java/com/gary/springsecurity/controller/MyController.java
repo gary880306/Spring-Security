@@ -41,4 +41,9 @@ public class MyController {
     public String authorization() {
         return "200OK";
     }
+
+    @PostMapping("/userLogin")
+    public String userLogin() {
+        return "登入";
+    }
 }

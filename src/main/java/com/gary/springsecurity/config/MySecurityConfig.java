@@ -55,11 +55,12 @@ public class MySecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(createCsrfHandler())
+                        .ignoringRequestMatchers("/register", "/userLogin") // 針對特定 POST/PUT/DELETE 關閉CSRF檢查
                 )
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/welcome", "/register").permitAll() // url = welcome or register 允許所有人
+                        .requestMatchers("/welcome", "/register", "userLogin").permitAll() // url = welcome or register 允許所有人
                         .requestMatchers("/**").authenticated()
                         .requestMatchers("/hello").hasAnyRole("ADMIN", "NORMAL_MEMBER")
                         .requestMatchers("/authorization").hasAnyRole("ADMIN")
