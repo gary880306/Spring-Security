@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -31,7 +32,7 @@ public class MyController {
         return "Hello " + username + "! 你的權限為: " + authorities + "方法層級授權測試: " + name;
     }
 
-    @GetMapping("/welcome")
+    @PostMapping("/welcome")
     public String welcome() {
         return "Welcome!";
     }
