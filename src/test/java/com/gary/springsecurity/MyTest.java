@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -76,5 +77,32 @@ public class MyTest {
                 .andExpect(header().exists("Access-Control-Allow-Methods"))
                 .andExpect(header().string("Access-Control-Allow-Methods", "GET"))
                 .andExpect(status().is(200));
+    }
+
+    // CSRF
+    @Test
+    public void testCsrfWithNoToken() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders
+                .post("/welcome")
+                .with(httpBasic("test1@gmail.com", "111"));
+        mockMvc.perform(request).andExpect(status().is(403));
+    }
+
+    @Test
+    public void testCsrfWithToken() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders
+                .post("/welcome")
+                .with(httpBasic("test1@gmail.com", "111"))
+                .with(csrf());
+        mockMvc.perform(request).andExpect(status().is(200));
+    }
+
+    @Test
+    public void testCsrfWithPublic() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders
+                .post("/userLogin")
+                .with(httpBasic("test1@gmail.com", "111"))
+                .with(csrf());
+        mockMvc.perform(request).andExpect(status().is(200));
     }
 }
