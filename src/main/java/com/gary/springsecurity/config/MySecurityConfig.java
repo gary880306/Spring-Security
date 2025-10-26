@@ -61,9 +61,9 @@ public class MySecurityConfig {
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/welcome", "/register", "userLogin").permitAll() // url = welcome or register 允許所有人
-                        .requestMatchers("/**").authenticated()
                         .requestMatchers("/hello").hasAnyRole("ADMIN", "NORMAL_MEMBER")
                         .requestMatchers("/authorization").hasAnyRole("ADMIN")
+                        .requestMatchers("/**").authenticated()
                         .anyRequest().denyAll()
                 )
                 .addFilterBefore(new MyFilter1(), BasicAuthenticationFilter.class)
