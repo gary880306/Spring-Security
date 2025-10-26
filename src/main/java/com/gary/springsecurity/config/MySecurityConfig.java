@@ -24,8 +24,9 @@ public class MySecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
-                .authorizeHttpRequests(request ->
-                        request.requestMatchers("/**").authenticated().anyRequest().denyAll()
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/register").permitAll() // 註冊帳號
+                        .anyRequest().authenticated()
                 )
                 .build();
     }
