@@ -46,4 +46,9 @@ public class MyController {
     public String userLogin() {
         return "登入";
     }
+
+    @GetMapping("/cors")
+    public String testCors() {
+        return "跨域測試";
+    }
 }

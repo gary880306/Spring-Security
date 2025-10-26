@@ -60,7 +60,7 @@ public class MySecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/welcome", "/register", "userLogin").permitAll() // url = welcome or register 允許所有人
+                        .requestMatchers("/welcome", "/register", "userLogin", "cors").permitAll() // url = welcome or register 允許所有人
                         .requestMatchers("/hello").hasAnyRole("ADMIN", "NORMAL_MEMBER")
                         .requestMatchers("/authorization").hasAnyRole("ADMIN")
                         .requestMatchers("/**").authenticated()
