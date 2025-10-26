@@ -21,6 +21,9 @@ public class MemberController {
     public String register(@RequestBody Member member) {
         // 省略參數檢查
 
+        // hash 原始密碼
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+
         // db插入一筆新的 Member 數據
         Integer memberId = memberDao.createMember(member);
         return "註冊成功";
